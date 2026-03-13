@@ -15,6 +15,24 @@ It features deep dark backgrounds, bright neon highlights for syntax, and built-
 * **⚡ Blazing Fast:** Pure Lua implementation using `vim.api.nvim_set_hl` with zero overhead.
 * **🔮 Cyberpunk Palette:** Electric Cyans, EVA Purples, and Acid Greens.
 * **🌫️ Transparent By Default:** Blends perfectly with your terminal background (Alacritty, Kitty, etc.).
+* **🌳 Treesitter Support:** 40+ highlight groups for rich, semantic syntax highlighting.
+* **🔍 LSP Integration:** Diagnostic underlines, reference highlights, inlay hints, and signature help.
+* **🎛️ Terminal Colors:** Full 16-color ANSI palette for embedded terminal buffers.
+* **🔌 Plugin Support:** First-class highlights for popular plugins (see below).
+
+## 🎨 Palette
+
+| Color | Hex | Usage |
+|-------|-----|-------|
+| Cyan | `#00dede` | Functions, statements, operators |
+| Green | `#28fa86` | Strings, types, booleans |
+| Purple | `#bd93f9` | Keywords, special, attributes |
+| Blue | `#61afef` | Constants, identifiers, properties |
+| Red | `#ff5555` | Errors, deletions, exceptions |
+| Yellow | `#f1fa8c` | Warnings, regex, git dirty |
+| White | `#e4e4e4` | Default foreground |
+| Grey | `#5c6370` | Comments, line numbers |
+| Dark | `#080a10` | Deepest backgrounds |
 
 ## 📦 Installation
 
@@ -23,9 +41,33 @@ It features deep dark backgrounds, bright neon highlights for syntax, and built-
 ```lua
 {
     "lpbborges/neon-genesis",
-    lazy = false, -- Load immediately to avoid flash of unstyled content
-    priority = 1000, -- Load before all other plugins
+    lazy = false,
+    priority = 1000,
     config = function()
         vim.cmd.colorscheme("neon-genesis")
     end,
 }
+```
+
+### [packer.nvim](https://github.com/wbthomason/packer.nvim)
+
+```lua
+use {
+    "lpbborges/neon-genesis",
+    config = function()
+        vim.cmd.colorscheme("neon-genesis")
+    end,
+}
+```
+
+## 🔌 Supported Plugins
+
+- [Telescope](https://github.com/nvim-telescope/telescope.nvim)
+- [nvim-cmp](https://github.com/hrsh7th/nvim-cmp)
+- [nvim-tree](https://github.com/nvim-tree/nvim-tree.lua)
+- [neo-tree](https://github.com/nvim-neo-tree/neo-tree.nvim)
+- [indent-blankline](https://github.com/lukas-reineke/indent-blankline.nvim)
+- [which-key](https://github.com/folke/which-key.nvim)
+- [Lazy.nvim](https://github.com/folke/lazy.nvim)
+- [GitSigns](https://github.com/lewis6991/gitsigns.nvim)
+- [LazyGit](https://github.com/kdheepak/lazygit.nvim)
