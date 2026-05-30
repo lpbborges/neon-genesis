@@ -15,8 +15,8 @@ It features deep dark backgrounds, bright neon highlights for syntax, and built-
 * **⚡ Blazing Fast:** Pure Lua implementation using `vim.api.nvim_set_hl` with zero overhead.
 * **🔮 Cyberpunk Palette:** Electric Cyans, EVA Purples, and Acid Greens.
 * **🌫️ Transparent By Default:** Blends perfectly with your terminal background (Alacritty, Kitty, etc.).
-* **🌳 Treesitter Support:** 40+ highlight groups for rich, semantic syntax highlighting.
-* **🔍 LSP Integration:** Diagnostic underlines, reference highlights, inlay hints, and signature help.
+* **🌳 Treesitter Support:** 80+ highlight groups for rich, semantic syntax highlighting.
+* **🔍 LSP Integration:** Diagnostic underlines, reference highlights, inlay hints, signature help, and semantic token highlighting.
 * **🎛️ Terminal Colors:** Full 16-color ANSI palette for embedded terminal buffers.
 * **🔌 Plugin Support:** First-class highlights for popular plugins (see below).
 
@@ -71,3 +71,4 @@ use {
 - [Lazy.nvim](https://github.com/folke/lazy.nvim)
 - [GitSigns](https://github.com/lewis6991/gitsigns.nvim)
 - [LazyGit](https://github.com/kdheepak/lazygit.nvim)
+- [blink.cmp](https://github.com/Saghen/blink.cmp)

@@ -95,7 +95,8 @@ Highlights in `init.lua` are organized in sections (maintain this order):
 12. LSP (LspReference*, LspSignature*, LspInlayHint)
 13. Git (Diff*, GitSigns*)
 14. UI Elements (StatusLine, WinSeparator)
-15. Plugins (LazyGit, Telescope, nvim-cmp, nvim-tree, neo-tree, indent-blankline, which-key, Lazy.nvim)
+15. Plugins (LazyGit, Telescope, nvim-cmp, nvim-tree, neo-tree, indent-blankline, which-key, Lazy.nvim, blink.cmp)
+16. LSP Semantic Tokens (@lsp.type.*, @lsp.mod.*)
 
 ### Transparency
 
@@ -135,9 +136,10 @@ Currently supported plugins:
 - indent-blankline
 - which-key
 - Lazy.nvim
+- blink.cmp
 
 ## Gotchas
 
 - **Cache clearing**: `colors/neon-genesis.lua` uses `package.loaded['neon-genesis'] = nil` to clear the module cache on reload
-- **termguicolors**: The theme sets `vim.o.termguicolors = true` automatically
+- **termguicolors**: The theme does not set `termguicolors`; users must enable it in their config via `vim.o.termguicolors = true`
 - **colors_name**: Must set `vim.g.colors_name = "neon-genesis"` for Neovim to recognize the theme
