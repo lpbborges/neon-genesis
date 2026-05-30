@@ -20,6 +20,13 @@ local colors = {
 	border = "#3e4452",
 }
 
+-- Override palette with user customizations
+if vim.g.neon_genesis_colors then
+	for k, v in pairs(vim.g.neon_genesis_colors) do
+		colors[k] = v
+	end
+end
+
 local function h(group, opts)
 	-- 0 means current buffer/global
 	nvim_set_hl(0, group, opts)
@@ -32,6 +39,8 @@ function M.load()
 
 	-- Required: Tell Neovim the theme name
 	vim.g.colors_name = "neon-genesis"
+
+	vim.o.background = "dark"
 
 	-- Terminal Ansi Colors
 	vim.g.terminal_color_0 = colors.dark
@@ -134,23 +143,21 @@ function M.load()
 
 	h("@function", { fg = colors.cyan })
 	h("@function.builtin", { fg = colors.cyan, italic = true })
-	h("@function.call", { fg = colors.cyan })
-	h("@function.method", { fg = colors.cyan })
-	h("@function.method.call", { fg = colors.cyan })
+	h("@function.call", { link = "@function" })
+	h("@function.method", { link = "@function" })
+	h("@function.method.call", { link = "@function" })
 
 	h("@keyword", { fg = colors.purple, bold = true })
-	h("@keyword.return", { fg = colors.purple, bold = true })
-	h("@keyword.function", { fg = colors.purple, bold = true })
-	h("@keyword.operator", { fg = colors.cyan, bold = true })
-	h("@keyword.import", { fg = colors.cyan })
-	h("@keyword.conditional", { fg = colors.purple, bold = true })
-	h("@keyword.repeat", { fg = colors.purple, bold = true })
+	h("@keyword.return", { link = "@keyword" })
+	h("@keyword.function", { link = "@keyword" })
+	h("@keyword.conditional", { link = "@keyword" })
+	h("@keyword.repeat", { link = "@keyword" })
 	h("@keyword.exception", { fg = colors.red })
 
 	h("@string", { fg = colors.green })
 	h("@string.escape", { fg = colors.cyan })
-	h("@character", { fg = colors.green })
-	h("@character.special", { fg = colors.green, bold = true })
+	h("@character", { link = "@string" })
+	h("@character.special", { link = "@string.special" })
 	h("@string.special", { fg = colors.green, bold = true })
 	h("@string.regex", { fg = colors.yellow })
 	h("@number", { fg = colors.blue })
@@ -159,13 +166,13 @@ function M.load()
 	h("@type.builtin", { fg = colors.green, italic = true })
 
 	h("@punctuation.bracket", { fg = colors.white })
-	h("@punctuation.delimiter", { fg = colors.white })
+	h("@punctuation.delimiter", { link = "@punctuation.bracket" })
 	h("@punctuation.special", { fg = colors.cyan })
 	h("@constructor", { fg = colors.green })
 	h("@property", { fg = colors.blue })
 	h("@attribute", { fg = colors.purple })
 	h("@namespace", { fg = colors.cyan, italic = true })
-	h("@module", { fg = colors.cyan, italic = true })
+	h("@module", { link = "@namespace" })
 	h("@operator", { fg = colors.cyan, bold = true })
 
 	h("@comment", { fg = colors.grey, italic = true })
@@ -178,15 +185,35 @@ function M.load()
 	h("@tag.attribute", { fg = colors.purple })
 	h("@tag.delimiter", { fg = colors.grey })
 
+	h("@markup.heading", { fg = colors.cyan, bold = true })
+	h("@markup.heading.1", { fg = colors.cyan, bold = true })
+	h("@markup.heading.2", { fg = colors.green, bold = true })
+	h("@markup.heading.3", { fg = colors.purple, bold = true })
+	h("@markup.heading.4", { fg = colors.blue, bold = true })
+	h("@markup.heading.5", { fg = colors.yellow, bold = true })
+	h("@markup.heading.6", { fg = colors.grey, bold = true })
+	h("@markup.italic", { italic = true })
+	h("@markup.bold", { bold = true })
+	h("@markup.strikethrough", { strikethrough = true })
+	h("@markup.link", { fg = colors.blue, underline = true })
+	h("@markup.link.url", { fg = colors.cyan, underline = true })
+	h("@markup.link.label", { fg = colors.purple })
+	h("@markup.list", { fg = colors.cyan })
+	h("@markup.list.checked", { fg = colors.green })
+	h("@markup.list.unchecked", { fg = colors.grey })
+	h("@markup.raw", { fg = colors.green })
+	h("@markup.math", { fg = colors.purple })
+	h("@markup.quote", { fg = colors.grey, italic = true })
+
 	-- Diagnostics
 	h("DiagnosticError", { fg = colors.red })
 	h("DiagnosticWarn", { fg = colors.yellow })
 	h("DiagnosticInfo", { fg = colors.cyan })
 	h("DiagnosticHint", { fg = colors.green })
-	h("DiagnosticSignError", { fg = colors.red })
-	h("DiagnosticSignWarn", { fg = colors.yellow })
-	h("DiagnosticSignInfo", { fg = colors.cyan })
-	h("DiagnosticSignHint", { fg = colors.green })
+	h("DiagnosticSignError", { link = "DiagnosticError" })
+	h("DiagnosticSignWarn", { link = "DiagnosticWarn" })
+	h("DiagnosticSignInfo", { link = "DiagnosticInfo" })
+	h("DiagnosticSignHint", { link = "DiagnosticHint" })
 	h("DiagnosticUnderlineError", { sp = colors.red, undercurl = true })
 	h("DiagnosticUnderlineWarn", { sp = colors.yellow, undercurl = true })
 	h("DiagnosticUnderlineInfo", { sp = colors.cyan, undercurl = true })
@@ -205,11 +232,9 @@ function M.load()
 
 	-- Git
 	h("DiffAdd", { fg = colors.green, bg = colors.none })
-	h("GitSignsAdd", { fg = colors.green, bg = colors.none })
-	h("DiffDelete", { fg = colors.red, bg = colors.none })
-	h("GitSignsDelete", { fg = colors.red, bg = colors.none })
-	h("DiffChange", { fg = colors.yellow, bg = colors.none })
-	h("GitSignsChange", { fg = colors.yellow, bg = colors.none })
+	h("GitSignsAdd", { link = "DiffAdd" })
+	h("GitSignsDelete", { link = "DiffDelete" })
+	h("GitSignsChange", { link = "DiffChange" })
 	h("DiffText", { fg = colors.blue, bg = colors.none, bold = true })
 
 	-- UI Elements
@@ -320,24 +345,25 @@ function M.load()
 	h("BlinkCmpGhostText", { fg = colors.grey, italic = true })
 
 	-- LSP Semantic Tokens
-	h("@lsp.type.function", { fg = colors.cyan })
-	h("@lsp.type.method", { fg = colors.cyan })
-	h("@lsp.type.variable", { fg = colors.white })
-	h("@lsp.type.parameter", { fg = colors.blue, italic = true })
-	h("@lsp.type.property", { fg = colors.blue })
-	h("@lsp.type.class", { fg = colors.green })
-	h("@lsp.type.interface", { fg = colors.green })
-	h("@lsp.type.type", { fg = colors.green })
-	h("@lsp.type.typeParameter", { fg = colors.green })
-	h("@lsp.type.enum", { fg = colors.green })
-	h("@lsp.type.enumMember", { fg = colors.blue })
-	h("@lsp.type.namespace", { fg = colors.cyan, italic = true })
-	h("@lsp.type.module", { fg = colors.cyan, italic = true })
-	h("@lsp.type.keyword", { fg = colors.purple, bold = true })
-	h("@lsp.type.string", { fg = colors.green })
-	h("@lsp.type.number", { fg = colors.blue })
+	h("@lsp.type.function", { link = "@function" })
+	h("@lsp.type.method", { link = "@function.method" })
+	h("@lsp.type.variable", { link = "@variable" })
+	h("@lsp.type.parameter", { link = "@variable.parameter" })
+	h("@lsp.type.property", { link = "@property" })
+	h("@lsp.type.class", { link = "@type" })
+	h("@lsp.type.interface", { link = "@type" })
+	h("@lsp.type.type", { link = "@type" })
+	h("@lsp.type.typeParameter", { link = "@type" })
+	h("@lsp.type.enum", { link = "@type" })
+	h("@lsp.type.enumMember", { link = "@property" })
+	h("@lsp.type.namespace", { link = "@namespace" })
+	h("@lsp.type.module", { link = "@module" })
+	h("@lsp.type.keyword", { link = "@keyword" })
+	h("@lsp.type.string", { link = "@string" })
+	h("@lsp.type.number", { link = "@number" })
 	h("@lsp.type.operator", { fg = colors.cyan })
-	h("@lsp.type.decorator", { fg = colors.purple })
+	h("@lsp.type.decorator", { link = "@attribute" })
+	h("@lsp.type.selfKeyword", { fg = colors.purple, italic = true })
 	h("@lsp.type.macro", { fg = colors.cyan })
 	h("@lsp.mod.deprecated", { strikethrough = true })
 end

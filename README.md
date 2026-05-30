@@ -15,7 +15,7 @@ It features deep dark backgrounds, bright neon highlights for syntax, and built-
 * **⚡ Blazing Fast:** Pure Lua implementation using `vim.api.nvim_set_hl` with zero overhead.
 * **🔮 Cyberpunk Palette:** Electric Cyans, EVA Purples, and Acid Greens.
 * **🌫️ Transparent By Default:** Blends perfectly with your terminal background (Alacritty, Kitty, etc.).
-* **🌳 Treesitter Support:** 80+ highlight groups for rich, semantic syntax highlighting.
+* **🌳 Treesitter Support:** 100+ highlight groups including markdown (`@markup.*`) for rich, semantic syntax highlighting.
 * **🔍 LSP Integration:** Diagnostic underlines, reference highlights, inlay hints, signature help, and semantic token highlighting.
 * **🎛️ Terminal Colors:** Full 16-color ANSI palette for embedded terminal buffers.
 * **🔌 Plugin Support:** First-class highlights for popular plugins (see below).
@@ -58,6 +58,20 @@ use {
         vim.cmd.colorscheme("neon-genesis")
     end,
 }
+```
+
+## 🎨 Customization
+
+Override any palette color via `vim.g.neon_genesis_colors` in your Neovim config *before* loading the colorscheme:
+
+```lua
+vim.g.neon_genesis_colors = {
+    cyan = "#00ffff",
+    green = "#50fa7b",
+    purple = "#c678dd",
+}
+
+vim.cmd.colorscheme("neon-genesis")
 ```
 
 ## 🔌 Supported Plugins

@@ -90,13 +90,15 @@ Highlights in `init.lua` are organized in sections (maintain this order):
 7. Cursor & Spelling (TermCursor, Spell*)
 8. Popup Menu (Pmenu*)
 9. Syntax (Statement, Keyword, Function, etc.)
-10. Treesitter (@variable, @function, @keyword, etc.)
+10. Treesitter (@variable, @function, @keyword, @markup.*, etc.)
 11. Diagnostics (Diagnostic*)
 12. LSP (LspReference*, LspSignature*, LspInlayHint)
 13. Git (Diff*, GitSigns*)
 14. UI Elements (StatusLine, WinSeparator)
-15. Plugins (LazyGit, Telescope, nvim-cmp, nvim-tree, neo-tree, indent-blankline, which-key, Lazy.nvim, blink.cmp)
-16. LSP Semantic Tokens (@lsp.type.*, @lsp.mod.*)
+16. Plugins (LazyGit, Telescope, nvim-cmp, nvim-tree, neo-tree, indent-blankline, which-key, Lazy.nvim, blink.cmp)
+17. LSP Semantic Tokens (@lsp.type.*, @lsp.mod.*)
+
+Links are used for groups with identical values (e.g., `DiagnosticSignError` → `DiagnosticError`, `GitSignsAdd` → `DiffAdd`). User palette overrides can be set via `vim.g.neon_genesis_colors`.
 
 ### Transparency
 
