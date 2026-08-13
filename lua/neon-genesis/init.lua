@@ -118,6 +118,8 @@ function M.load()
 	h("Pmenu", { bg = colors.float_bg, fg = colors.white })
 	h("PmenuSel", { bg = colors.selection, fg = colors.cyan, bold = true })
 	h("PmenuBorder", { fg = colors.grey, bg = colors.float_bg })
+	h("PmenuSbar", { bg = colors.surface })
+	h("PmenuThumb", { bg = colors.border })
 
 	-- Syntax
 	h("Statement", { fg = colors.cyan, bold = true })
@@ -232,6 +234,8 @@ function M.load()
 
 	-- Git
 	h("DiffAdd", { fg = colors.green, bg = colors.none })
+	h("DiffChange", { fg = colors.yellow, bg = colors.none })
+	h("DiffDelete", { fg = colors.red, bg = colors.none })
 	h("GitSignsAdd", { link = "DiffAdd" })
 	h("GitSignsDelete", { link = "DiffDelete" })
 	h("GitSignsChange", { link = "DiffChange" })
