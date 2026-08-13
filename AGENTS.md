@@ -139,6 +139,13 @@ Currently supported plugins:
 - which-key
 - Lazy.nvim
 - blink.cmp
+- lualine.nvim
+- mini.statusline
+- noice.nvim
+- trouble.nvim
+- mason.nvim
+- snacks.nvim
+- flash.nvim
 
 ## Gotchas
 
