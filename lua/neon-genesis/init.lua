@@ -20,16 +20,38 @@ local colors = {
 	border = "#3e4452",
 }
 
--- Override palette with user customizations
+-- vim.g.neon_genesis_config is set by M.setup() and, unlike module-local
+-- state, survives the package.loaded cache-clear in colors/neon-genesis.lua
+local config = vim.g.neon_genesis_config or {}
+
+-- Override palette with user customizations (legacy mechanism, still supported)
 if vim.g.neon_genesis_colors then
 	for k, v in pairs(vim.g.neon_genesis_colors) do
 		colors[k] = v
 	end
 end
 
+-- setup({colors=...}) takes precedence over vim.g.neon_genesis_colors if both are set
+if config.colors then
+	for k, v in pairs(config.colors) do
+		colors[k] = v
+	end
+end
+
+local default_styles = {
+	comments = { italic = true },
+	keywords = { bold = true },
+	functions = { bold = false },
+}
+local styles = vim.tbl_deep_extend("force", default_styles, config.styles or {})
+
 local function h(group, opts)
 	-- 0 means current buffer/global
 	nvim_set_hl(0, group, opts)
+end
+
+function M.setup(opts)
+	vim.g.neon_genesis_config = opts or {}
 end
 
 function M.load()
@@ -118,18 +140,20 @@ function M.load()
 	h("Pmenu", { bg = colors.float_bg, fg = colors.white })
 	h("PmenuSel", { bg = colors.selection, fg = colors.cyan, bold = true })
 	h("PmenuBorder", { fg = colors.grey, bg = colors.float_bg })
+	h("PmenuSbar", { bg = colors.surface })
+	h("PmenuThumb", { bg = colors.border })
 
 	-- Syntax
-	h("Statement", { fg = colors.cyan, bold = true })
-	h("Keyword", { fg = colors.purple, bold = true }) -- EVA Purple
-	h("Function", { fg = colors.cyan })
+	h("Statement", { fg = colors.cyan, bold = styles.keywords.bold })
+	h("Keyword", { fg = colors.purple, bold = styles.keywords.bold }) -- EVA Purple
+	h("Function", { fg = colors.cyan, bold = styles.functions.bold })
 	h("Directory", { fg = colors.cyan, bold = true })
 	h("Title", { fg = colors.cyan, bold = true })
 	h("Operator", { fg = colors.cyan, bold = true })
 	h("String", { fg = colors.green }) -- EVA Green
 	h("Type", { fg = colors.green })
 	h("Boolean", { fg = colors.green, bold = true })
-	h("Comment", { fg = colors.grey, italic = true })
+	h("Comment", { fg = colors.grey, italic = styles.comments.italic })
 	h("Constant", { fg = colors.blue })
 	h("Special", { fg = colors.purple })
 	h("Identifier", { fg = colors.blue })
@@ -141,13 +165,13 @@ function M.load()
 	h("@variable.parameter", { fg = colors.blue, italic = true })
 	h("@variable.member", { fg = colors.blue })
 
-	h("@function", { fg = colors.cyan })
+	h("@function", { fg = colors.cyan, bold = styles.functions.bold })
 	h("@function.builtin", { fg = colors.cyan, italic = true })
 	h("@function.call", { link = "@function" })
 	h("@function.method", { link = "@function" })
 	h("@function.method.call", { link = "@function" })
 
-	h("@keyword", { fg = colors.purple, bold = true })
+	h("@keyword", { fg = colors.purple, bold = styles.keywords.bold })
 	h("@keyword.return", { link = "@keyword" })
 	h("@keyword.function", { link = "@keyword" })
 	h("@keyword.conditional", { link = "@keyword" })
@@ -175,7 +199,7 @@ function M.load()
 	h("@module", { link = "@namespace" })
 	h("@operator", { fg = colors.cyan, bold = true })
 
-	h("@comment", { fg = colors.grey, italic = true })
+	h("@comment", { fg = colors.grey, italic = styles.comments.italic })
 	h("@comment.todo", { fg = colors.yellow, bold = true })
 	h("@comment.note", { fg = colors.cyan, bold = true })
 	h("@comment.warning", { fg = colors.yellow, bold = true })
@@ -203,7 +227,7 @@ function M.load()
 	h("@markup.list.unchecked", { fg = colors.grey })
 	h("@markup.raw", { fg = colors.green })
 	h("@markup.math", { fg = colors.purple })
-	h("@markup.quote", { fg = colors.grey, italic = true })
+	h("@markup.quote", { fg = colors.grey, italic = styles.comments.italic })
 
 	-- Diagnostics
 	h("DiagnosticError", { fg = colors.red })
@@ -228,10 +252,12 @@ function M.load()
 	h("LspReferenceRead", { bg = colors.selection })
 	h("LspReferenceWrite", { bg = colors.selection, bold = true })
 	h("LspSignatureActiveParameter", { fg = colors.cyan, bold = true, underline = true })
-	h("LspInlayHint", { fg = colors.grey, italic = true })
+	h("LspInlayHint", { fg = colors.grey, italic = styles.comments.italic })
 
 	-- Git
 	h("DiffAdd", { fg = colors.green, bg = colors.none })
+	h("DiffChange", { fg = colors.yellow, bg = colors.none })
+	h("DiffDelete", { fg = colors.red, bg = colors.none })
 	h("GitSignsAdd", { link = "DiffAdd" })
 	h("GitSignsDelete", { link = "DiffDelete" })
 	h("GitSignsChange", { link = "DiffChange" })
@@ -366,6 +392,67 @@ function M.load()
 	h("@lsp.type.selfKeyword", { fg = colors.purple, italic = true })
 	h("@lsp.type.macro", { fg = colors.cyan })
 	h("@lsp.mod.deprecated", { strikethrough = true })
+
+	-- Plugins: mini.statusline
+	h("MiniStatuslineModeNormal", { fg = colors.dark, bg = colors.cyan, bold = true })
+	h("MiniStatuslineModeInsert", { fg = colors.dark, bg = colors.green, bold = true })
+	h("MiniStatuslineModeVisual", { fg = colors.dark, bg = colors.purple, bold = true })
+	h("MiniStatuslineModeReplace", { fg = colors.dark, bg = colors.red, bold = true })
+	h("MiniStatuslineModeCommand", { fg = colors.dark, bg = colors.yellow, bold = true })
+	h("MiniStatuslineModeOther", { fg = colors.dark, bg = colors.blue, bold = true })
+	h("MiniStatuslineDevinfo", { fg = colors.white, bg = colors.surface })
+	h("MiniStatuslineFilename", { fg = colors.grey, bg = colors.none })
+	h("MiniStatuslineFileinfo", { fg = colors.white, bg = colors.surface })
+	h("MiniStatuslineInactive", { fg = colors.grey, bg = colors.none })
+
+	-- Plugins: noice.nvim
+	h("NoiceCmdlinePopup", { link = "NormalFloat" })
+	h("NoiceCmdlinePopupBorder", { link = "FloatBorder" })
+	h("NoiceCmdlineIcon", { fg = colors.cyan })
+	h("NoiceMini", { link = "NormalFloat" })
+	h("NoicePopupmenu", { link = "Pmenu" })
+	h("NoicePopupmenuBorder", { link = "FloatBorder" })
+	h("NoicePopupmenuSelected", { link = "PmenuSel" })
+
+	-- Plugins: trouble.nvim
+	h("TroubleNormal", { fg = colors.white, bg = colors.none })
+	h("TroubleText", { fg = colors.white })
+	h("TroubleCount", { fg = colors.cyan, bold = true })
+	h("TroubleIndent", { fg = colors.border })
+	h("TroubleFoldIcon", { fg = colors.grey })
+	h("TroubleTextError", { link = "DiagnosticError" })
+	h("TroubleTextWarning", { link = "DiagnosticWarn" })
+	h("TroubleTextInformation", { link = "DiagnosticInfo" })
+	h("TroubleTextHint", { link = "DiagnosticHint" })
+
+	-- Plugins: mason.nvim
+	h("MasonHeader", { fg = colors.dark, bg = colors.cyan, bold = true })
+	h("MasonHighlight", { fg = colors.cyan })
+	h("MasonHighlightBlock", { fg = colors.dark, bg = colors.cyan })
+	h("MasonHighlightBlockBold", { fg = colors.dark, bg = colors.cyan, bold = true })
+	h("MasonMuted", { fg = colors.grey })
+	h("MasonMutedBlock", { fg = colors.white, bg = colors.surface })
+	h("MasonHighlightBlockGreen", { fg = colors.dark, bg = colors.green })
+	h("MasonMutedBlockGreen", { fg = colors.green, bg = colors.surface })
+	h("MasonHighlightBlockRed", { fg = colors.dark, bg = colors.red })
+
+	-- Plugins: snacks.nvim
+	h("SnacksDashboardHeader", { fg = colors.cyan, bold = true })
+	h("SnacksDashboardIcon", { fg = colors.cyan })
+	h("SnacksDashboardDesc", { fg = colors.white })
+	h("SnacksDashboardKey", { fg = colors.purple })
+	h("SnacksDashboardFooter", { fg = colors.grey, italic = true })
+	h("SnacksNotifierError", { link = "DiagnosticError" })
+	h("SnacksNotifierWarn", { link = "DiagnosticWarn" })
+	h("SnacksNotifierInfo", { link = "DiagnosticInfo" })
+	h("SnacksNotifierDebug", { link = "DiagnosticHint" })
+	h("SnacksNotifierTrace", { fg = colors.grey })
+
+	-- Plugins: flash.nvim
+	h("FlashLabel", { fg = colors.dark, bg = colors.cyan, bold = true })
+	h("FlashMatch", { fg = colors.white, bg = colors.selection })
+	h("FlashCurrent", { fg = colors.dark, bg = colors.green, bold = true })
+	h("FlashBackdrop", { fg = colors.grey })
 end
 
 return M

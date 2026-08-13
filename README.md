@@ -74,6 +74,23 @@ vim.g.neon_genesis_colors = {
 vim.cmd.colorscheme("neon-genesis")
 ```
 
+Alternatively, use `setup()` to configure both colors and style toggles:
+
+```lua
+require("neon-genesis").setup({
+    colors = {
+        cyan = "#00ffff",
+    },
+    styles = {
+        comments = { italic = false },
+        keywords = { bold = true },
+        functions = { bold = true },
+    },
+})
+
+vim.cmd.colorscheme("neon-genesis")
+```
+
 ## 🔌 Supported Plugins
 
 - [Telescope](https://github.com/nvim-telescope/telescope.nvim)
@@ -86,3 +103,10 @@ vim.cmd.colorscheme("neon-genesis")
 - [GitSigns](https://github.com/lewis6991/gitsigns.nvim)
 - [LazyGit](https://github.com/kdheepak/lazygit.nvim)
 - [blink.cmp](https://github.com/Saghen/blink.cmp)
+- [lualine.nvim](https://github.com/nvim-lualine/lualine.nvim)
+- [mini.statusline](https://github.com/echasnovski/mini.statusline)
+- [noice.nvim](https://github.com/folke/noice.nvim)
+- [trouble.nvim](https://github.com/folke/trouble.nvim)
+- [mason.nvim](https://github.com/williamboman/mason.nvim)
+- [snacks.nvim](https://github.com/folke/snacks.nvim)
+- [flash.nvim](https://github.com/folke/flash.nvim)

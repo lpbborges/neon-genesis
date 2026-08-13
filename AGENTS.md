@@ -17,9 +17,15 @@ neon-genesis/
 ├── colors/
 │   └── neon-genesis.lua    # Entry point - loads the theme
 ├── lua/
-│   └── neon-genesis/
-│       └── init.lua        # Main module - palette and highlight definitions
+│   ├── neon-genesis/
+│   │   └── init.lua        # Main module - palette, setup(), and highlight definitions
+│   └── lualine/
+│       └── themes/
+│           └── neon-genesis.lua  # lualine.nvim theme
+├── doc/
+│   └── neon-genesis.txt    # :help neon-genesis
 ├── README.md
+├── CONTRIBUTING.md
 ├── LICENSE
 └── .gitignore
 ```
@@ -29,7 +35,8 @@ neon-genesis/
 | File | Purpose |
 |------|---------|
 | `colors/neon-genesis.lua` | Neovim autoload entry point. Clears cache and calls `require('neon-genesis').load()` |
-| `lua/neon-genesis/init.lua` | Core implementation: color palette, highlight groups, and `load()` function |
+| `lua/neon-genesis/init.lua` | Core implementation: color palette, `setup()`, highlight groups, and `load()` function |
+| `lua/lualine/themes/neon-genesis.lua` | lualine.nvim theme, following lualine's own theme-file convention |
 
 ## Commands
 
@@ -95,8 +102,8 @@ Highlights in `init.lua` are organized in sections (maintain this order):
 12. LSP (LspReference*, LspSignature*, LspInlayHint)
 13. Git (Diff*, GitSigns*)
 14. UI Elements (StatusLine, WinSeparator)
-16. Plugins (LazyGit, Telescope, nvim-cmp, nvim-tree, neo-tree, indent-blankline, which-key, Lazy.nvim, blink.cmp)
-17. LSP Semantic Tokens (@lsp.type.*, @lsp.mod.*)
+15. Plugins (LazyGit, Telescope, nvim-cmp, nvim-tree, neo-tree, indent-blankline, which-key, Lazy.nvim, blink.cmp, mini.statusline, noice.nvim, trouble.nvim, mason.nvim, snacks.nvim, flash.nvim)
+16. LSP Semantic Tokens (@lsp.type.*, @lsp.mod.*)
 
 Links are used for groups with identical values (e.g., `DiagnosticSignError` → `DiagnosticError`, `GitSignsAdd` → `DiffAdd`). User palette overrides can be set via `vim.g.neon_genesis_colors`.
 
@@ -139,6 +146,13 @@ Currently supported plugins:
 - which-key
 - Lazy.nvim
 - blink.cmp
+- lualine.nvim
+- mini.statusline
+- noice.nvim
+- trouble.nvim
+- mason.nvim
+- snacks.nvim
+- flash.nvim
 
 ## Gotchas
 

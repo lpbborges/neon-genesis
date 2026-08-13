@@ -1,0 +1,93 @@
+*neon-genesis.txt*  A high-contrast, cyberpunk-inspired colorscheme for Neovim
+
+==============================================================================
+CONTENTS                                                *neon-genesis-contents*
+
+    1. Introduction ........... |neon-genesis-introduction|
+    2. Installation ........... |neon-genesis-installation|
+    3. Usage ................... |neon-genesis-usage|
+    4. Configuration ........... |neon-genesis-configuration|
+    5. Supported Plugins ....... |neon-genesis-plugins|
+
+==============================================================================
+1. Introduction                                     *neon-genesis-introduction*
+
+neon-genesis.nvim is a high-contrast, cyberpunk-inspired colorscheme for
+Neovim with built-in transparency support.
+
+==============================================================================
+2. Installation                                     *neon-genesis-installation*
+
+Using lazy.nvim: >lua
+    {
+        "lpbborges/neon-genesis",
+        lazy = false,
+        priority = 1000,
+        config = function()
+            vim.cmd.colorscheme("neon-genesis")
+        end,
+    }
+<
+==============================================================================
+3. Usage                                                   *neon-genesis-usage*
+
+Load the colorscheme with: >vim
+    :colorscheme neon-genesis
+<
+Or from Lua: >lua
+    vim.cmd.colorscheme("neon-genesis")
+<
+This theme does not set 'termguicolors' — enable it yourself: >lua
+    vim.o.termguicolors = true
+<
+==============================================================================
+4. Configuration                                   *neon-genesis-configuration*
+
+Override palette colors and style toggles via `setup()`: >lua
+    require("neon-genesis").setup({
+        colors = {
+            cyan = "#00ffff",
+        },
+        styles = {
+            comments = { italic = false },
+            keywords = { bold = true },
+            functions = { bold = true },
+        },
+    })
+
+    vim.cmd.colorscheme("neon-genesis")
+<
+`styles` fields and their defaults:
+    comments.italic     default: true
+    keywords.bold       default: true
+    functions.bold      default: false
+
+Palette colors may also be overridden via a global variable, set before
+`colorscheme` is called: >lua
+    vim.g.neon_genesis_colors = {
+        cyan = "#00ffff",
+    }
+<
+==============================================================================
+5. Supported Plugins                                     *neon-genesis-plugins*
+
+    - Telescope
+    - nvim-cmp
+    - nvim-tree
+    - neo-tree
+    - indent-blankline
+    - which-key
+    - Lazy.nvim
+    - GitSigns
+    - LazyGit
+    - blink.cmp
+    - lualine.nvim
+    - mini.statusline
+    - noice.nvim
+    - trouble.nvim
+    - mason.nvim
+    - snacks.nvim
+    - flash.nvim
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:
