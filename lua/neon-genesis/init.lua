@@ -392,6 +392,67 @@ function M.load()
 	h("@lsp.type.selfKeyword", { fg = colors.purple, italic = true })
 	h("@lsp.type.macro", { fg = colors.cyan })
 	h("@lsp.mod.deprecated", { strikethrough = true })
+
+	-- Plugins: mini.statusline
+	h("MiniStatuslineModeNormal", { fg = colors.dark, bg = colors.cyan, bold = true })
+	h("MiniStatuslineModeInsert", { fg = colors.dark, bg = colors.green, bold = true })
+	h("MiniStatuslineModeVisual", { fg = colors.dark, bg = colors.purple, bold = true })
+	h("MiniStatuslineModeReplace", { fg = colors.dark, bg = colors.red, bold = true })
+	h("MiniStatuslineModeCommand", { fg = colors.dark, bg = colors.yellow, bold = true })
+	h("MiniStatuslineModeOther", { fg = colors.dark, bg = colors.blue, bold = true })
+	h("MiniStatuslineDevinfo", { fg = colors.white, bg = colors.surface })
+	h("MiniStatuslineFilename", { fg = colors.grey, bg = colors.none })
+	h("MiniStatuslineFileinfo", { fg = colors.white, bg = colors.surface })
+	h("MiniStatuslineInactive", { fg = colors.grey, bg = colors.none })
+
+	-- Plugins: noice.nvim
+	h("NoiceCmdlinePopup", { link = "NormalFloat" })
+	h("NoiceCmdlinePopupBorder", { link = "FloatBorder" })
+	h("NoiceCmdlineIcon", { fg = colors.cyan })
+	h("NoiceMini", { link = "NormalFloat" })
+	h("NoicePopupmenu", { link = "Pmenu" })
+	h("NoicePopupmenuBorder", { link = "FloatBorder" })
+	h("NoicePopupmenuSelected", { link = "PmenuSel" })
+
+	-- Plugins: trouble.nvim
+	h("TroubleNormal", { fg = colors.white, bg = colors.none })
+	h("TroubleText", { fg = colors.white })
+	h("TroubleCount", { fg = colors.cyan, bold = true })
+	h("TroubleIndent", { fg = colors.border })
+	h("TroubleFoldIcon", { fg = colors.grey })
+	h("TroubleTextError", { link = "DiagnosticError" })
+	h("TroubleTextWarning", { link = "DiagnosticWarn" })
+	h("TroubleTextInformation", { link = "DiagnosticInfo" })
+	h("TroubleTextHint", { link = "DiagnosticHint" })
+
+	-- Plugins: mason.nvim
+	h("MasonHeader", { fg = colors.dark, bg = colors.cyan, bold = true })
+	h("MasonHighlight", { fg = colors.cyan })
+	h("MasonHighlightBlock", { fg = colors.dark, bg = colors.cyan })
+	h("MasonHighlightBlockBold", { fg = colors.dark, bg = colors.cyan, bold = true })
+	h("MasonMuted", { fg = colors.grey })
+	h("MasonMutedBlock", { fg = colors.white, bg = colors.surface })
+	h("MasonHighlightBlockGreen", { fg = colors.dark, bg = colors.green })
+	h("MasonMutedBlockGreen", { fg = colors.green, bg = colors.surface })
+	h("MasonHighlightBlockRed", { fg = colors.dark, bg = colors.red })
+
+	-- Plugins: snacks.nvim
+	h("SnacksDashboardHeader", { fg = colors.cyan, bold = true })
+	h("SnacksDashboardIcon", { fg = colors.cyan })
+	h("SnacksDashboardDesc", { fg = colors.white })
+	h("SnacksDashboardKey", { fg = colors.purple })
+	h("SnacksDashboardFooter", { fg = colors.grey, italic = true })
+	h("SnacksNotifierError", { link = "DiagnosticError" })
+	h("SnacksNotifierWarn", { link = "DiagnosticWarn" })
+	h("SnacksNotifierInfo", { link = "DiagnosticInfo" })
+	h("SnacksNotifierDebug", { link = "DiagnosticHint" })
+	h("SnacksNotifierTrace", { fg = colors.grey })
+
+	-- Plugins: flash.nvim
+	h("FlashLabel", { fg = colors.dark, bg = colors.cyan, bold = true })
+	h("FlashMatch", { fg = colors.white, bg = colors.selection })
+	h("FlashCurrent", { fg = colors.dark, bg = colors.green, bold = true })
+	h("FlashBackdrop", { fg = colors.grey })
 end
 
 return M
