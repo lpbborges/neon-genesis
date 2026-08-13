@@ -20,16 +20,38 @@ local colors = {
 	border = "#3e4452",
 }
 
--- Override palette with user customizations
+-- vim.g.neon_genesis_config is set by M.setup() and, unlike module-local
+-- state, survives the package.loaded cache-clear in colors/neon-genesis.lua
+local config = vim.g.neon_genesis_config or {}
+
+-- Override palette with user customizations (legacy mechanism, still supported)
 if vim.g.neon_genesis_colors then
 	for k, v in pairs(vim.g.neon_genesis_colors) do
 		colors[k] = v
 	end
 end
 
+-- setup({colors=...}) takes precedence over vim.g.neon_genesis_colors if both are set
+if config.colors then
+	for k, v in pairs(config.colors) do
+		colors[k] = v
+	end
+end
+
+local default_styles = {
+	comments = { italic = true },
+	keywords = { bold = true },
+	functions = { bold = false },
+}
+local styles = vim.tbl_deep_extend("force", default_styles, config.styles or {})
+
 local function h(group, opts)
 	-- 0 means current buffer/global
 	nvim_set_hl(0, group, opts)
+end
+
+function M.setup(opts)
+	vim.g.neon_genesis_config = opts or {}
 end
 
 function M.load()
@@ -122,16 +144,16 @@ function M.load()
 	h("PmenuThumb", { bg = colors.border })
 
 	-- Syntax
-	h("Statement", { fg = colors.cyan, bold = true })
-	h("Keyword", { fg = colors.purple, bold = true }) -- EVA Purple
-	h("Function", { fg = colors.cyan })
+	h("Statement", { fg = colors.cyan, bold = styles.keywords.bold })
+	h("Keyword", { fg = colors.purple, bold = styles.keywords.bold }) -- EVA Purple
+	h("Function", { fg = colors.cyan, bold = styles.functions.bold })
 	h("Directory", { fg = colors.cyan, bold = true })
 	h("Title", { fg = colors.cyan, bold = true })
 	h("Operator", { fg = colors.cyan, bold = true })
 	h("String", { fg = colors.green }) -- EVA Green
 	h("Type", { fg = colors.green })
 	h("Boolean", { fg = colors.green, bold = true })
-	h("Comment", { fg = colors.grey, italic = true })
+	h("Comment", { fg = colors.grey, italic = styles.comments.italic })
 	h("Constant", { fg = colors.blue })
 	h("Special", { fg = colors.purple })
 	h("Identifier", { fg = colors.blue })
@@ -143,13 +165,13 @@ function M.load()
 	h("@variable.parameter", { fg = colors.blue, italic = true })
 	h("@variable.member", { fg = colors.blue })
 
-	h("@function", { fg = colors.cyan })
+	h("@function", { fg = colors.cyan, bold = styles.functions.bold })
 	h("@function.builtin", { fg = colors.cyan, italic = true })
 	h("@function.call", { link = "@function" })
 	h("@function.method", { link = "@function" })
 	h("@function.method.call", { link = "@function" })
 
-	h("@keyword", { fg = colors.purple, bold = true })
+	h("@keyword", { fg = colors.purple, bold = styles.keywords.bold })
 	h("@keyword.return", { link = "@keyword" })
 	h("@keyword.function", { link = "@keyword" })
 	h("@keyword.conditional", { link = "@keyword" })
@@ -177,7 +199,7 @@ function M.load()
 	h("@module", { link = "@namespace" })
 	h("@operator", { fg = colors.cyan, bold = true })
 
-	h("@comment", { fg = colors.grey, italic = true })
+	h("@comment", { fg = colors.grey, italic = styles.comments.italic })
 	h("@comment.todo", { fg = colors.yellow, bold = true })
 	h("@comment.note", { fg = colors.cyan, bold = true })
 	h("@comment.warning", { fg = colors.yellow, bold = true })
@@ -205,7 +227,7 @@ function M.load()
 	h("@markup.list.unchecked", { fg = colors.grey })
 	h("@markup.raw", { fg = colors.green })
 	h("@markup.math", { fg = colors.purple })
-	h("@markup.quote", { fg = colors.grey, italic = true })
+	h("@markup.quote", { fg = colors.grey, italic = styles.comments.italic })
 
 	-- Diagnostics
 	h("DiagnosticError", { fg = colors.red })
@@ -230,7 +252,7 @@ function M.load()
 	h("LspReferenceRead", { bg = colors.selection })
 	h("LspReferenceWrite", { bg = colors.selection, bold = true })
 	h("LspSignatureActiveParameter", { fg = colors.cyan, bold = true, underline = true })
-	h("LspInlayHint", { fg = colors.grey, italic = true })
+	h("LspInlayHint", { fg = colors.grey, italic = styles.comments.italic })
 
 	-- Git
 	h("DiffAdd", { fg = colors.green, bg = colors.none })
